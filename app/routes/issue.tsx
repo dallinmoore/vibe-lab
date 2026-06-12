@@ -2,6 +2,7 @@ import { Form, Link, redirect, useNavigation } from "react-router";
 
 import type { Route } from "./+types/issue";
 import { getUser } from "../auth.server";
+import { ThemeToggle } from "../components/theme-toggle";
 import {
   deleteIssue,
   getIssue,
@@ -80,6 +81,9 @@ export default function IssueDetail({
         </span>
         <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-300">
           {statusLabel(issue.status)}
+        </span>
+        <span className="ml-auto">
+          <ThemeToggle />
         </span>
       </div>
 

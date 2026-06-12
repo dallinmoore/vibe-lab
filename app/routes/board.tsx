@@ -3,6 +3,7 @@ import { Link, useFetcher } from "react-router";
 
 import type { Route } from "./+types/board";
 import { getUser } from "../auth.server";
+import { ThemeToggle } from "../components/theme-toggle";
 import {
   createIssue,
   deleteIssue,
@@ -141,12 +142,15 @@ export default function Board({ loaderData }: Route.ComponentProps) {
             {shortName(currentEmail)}
           </p>
         </div>
-        <button
-          onClick={() => setCreating(true)}
-          className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-500"
-        >
-          + New issue
-        </button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <button
+            onClick={() => setCreating(true)}
+            className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-500"
+          >
+            + New issue
+          </button>
+        </div>
       </header>
 
       <div className="flex gap-4 overflow-x-auto p-6">

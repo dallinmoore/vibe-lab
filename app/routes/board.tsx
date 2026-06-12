@@ -189,9 +189,10 @@ export default function Board({ loaderData }: Route.ComponentProps) {
                 <h2 className="font-pixel text-[11px] text-jungle-deep dark:text-leaf">
                   {col.label}
                 </h2>
-                <span className="font-pixel rounded-none border-2 border-jungle-deep bg-sun px-2 py-0.5 text-[10px] text-jungle-deep dark:border-leaf">
+                {/* Column count hidden for now — restore when asked to show it again. */}
+                {/* <span className="font-pixel rounded-none border-2 border-jungle-deep bg-sun px-2 py-0.5 text-[10px] text-jungle-deep dark:border-leaf">
                   {cards.length}
-                </span>
+                </span> */}
               </div>
 
               <div className="flex min-h-24 flex-1 flex-col gap-2 px-2 pb-2">

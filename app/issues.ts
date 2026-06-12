@@ -6,11 +6,12 @@
  * status columns, priority levels, and their display metadata.
  */
 
-/** The Kanban columns, in board order. `id` is the value stored in `status`. */
+/** The Kanban columns, in board order. `id` is the value stored in `status`.
+   Labels are parrot-rescue themed — the journey from cage to freedom. */
 export const STATUSES = [
-  { id: "todo", label: "To Do" },
-  { id: "in_progress", label: "In Progress" },
-  { id: "done", label: "Done" },
+  { id: "todo", label: "🔒 Caged" },
+  { id: "in_progress", label: "🪶 Breaking Free" },
+  { id: "done", label: "🦜 Freed!" },
 ] as const;
 
 export type StatusId = (typeof STATUSES)[number]["id"];
@@ -21,12 +22,13 @@ export function isStatus(value: unknown): value is StatusId {
   return typeof value === "string" && STATUS_IDS.includes(value as StatusId);
 }
 
-/** Priority levels, low → urgent, with Tailwind classes for the badge. */
+/** Priority levels, low → urgent, with Tailwind classes for the badge.
+   Themed as how urgently a captive parrot needs rescuing. */
 export const PRIORITIES = [
-  { id: "low", label: "Low", badge: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300" },
-  { id: "medium", label: "Medium", badge: "bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300" },
-  { id: "high", label: "High", badge: "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300" },
-  { id: "urgent", label: "Urgent", badge: "bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300" },
+  { id: "low", label: "Chillin'", badge: "bg-sky/20 text-sky-deep border-2 border-sky-deep dark:bg-sky/20 dark:text-sky" },
+  { id: "medium", label: "Squawky", badge: "bg-leaf/30 text-jungle-deep border-2 border-jungle dark:text-leaf dark:border-leaf" },
+  { id: "high", label: "Caged!", badge: "bg-sun/40 text-bark border-2 border-bark dark:text-sun dark:border-sun" },
+  { id: "urgent", label: "SOS! 🚨", badge: "bg-macaw/20 text-macaw-dark border-2 border-macaw dark:text-macaw dark:border-macaw" },
 ] as const;
 
 export type PriorityId = (typeof PRIORITIES)[number]["id"];
@@ -45,9 +47,9 @@ export function statusLabel(id: string) {
   return STATUSES.find((s) => s.id === id)?.label ?? id;
 }
 
-/** Human-readable issue key, e.g. `VIBE-42`. */
+/** Human-readable issue key, e.g. `FREE-42`. */
 export function issueKey(id: number) {
-  return `VIBE-${id}`;
+  return `FREE-${id}`;
 }
 
 /** First part of an email, used as a short display name / avatar seed. */

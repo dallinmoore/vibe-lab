@@ -33,7 +33,7 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap",
   },
 ];
 
@@ -91,14 +91,20 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
+    <main className="container mx-auto p-4 pt-16">
+      <div className="pixel-box mx-auto max-w-xl bg-white p-6 dark:bg-emerald-950">
+        <div className="mb-3 text-5xl">🦜💔</div>
+        <h1 className="font-pixel text-xl text-macaw">{message}</h1>
+        <p className="mt-3 text-lg">{details}</p>
+        <p className="font-pixel mt-4 text-xs text-jungle dark:text-leaf">
+          FREE THE CAPTIVES
+        </p>
+        {stack && (
+          <pre className="mt-4 w-full overflow-x-auto rounded bg-emerald-950 p-4 text-xs text-leaf">
+            <code>{stack}</code>
+          </pre>
+        )}
+      </div>
     </main>
   );
 }

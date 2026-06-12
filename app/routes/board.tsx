@@ -24,8 +24,11 @@ import {
 
 export function meta() {
   return [
-    { title: "Vibe Board" },
-    { name: "description", content: "A simple team issue board." },
+    { title: "🦜 FREE THE CAPTIVES — Parrot Rescue Board" },
+    {
+      name: "description",
+      content: "A pixel-art parrot rescue board. Free the captives, one squawk at a time.",
+    },
   ];
 }
 
@@ -131,24 +134,31 @@ export default function Board({ loaderData }: Route.ComponentProps) {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      <header className="flex items-center justify-between gap-4 border-b border-gray-200 px-6 py-4 dark:border-gray-800">
-        <div>
-          <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-50">
-            Vibe Board
-          </h1>
-          <p className="text-sm text-gray-500">
-            {issues.length} issue{issues.length === 1 ? "" : "s"} · signed in as{" "}
-            {shortName(currentEmail)}
-          </p>
+    <main className="min-h-screen">
+      <CaptiveMarquee />
+
+      <header className="flex flex-wrap items-center justify-between gap-4 border-b-4 border-jungle-deep bg-jungle px-6 py-5 dark:border-emerald-950 dark:bg-jungle-deep">
+        <div className="flex items-center gap-3">
+          <span className="animate-bob text-5xl" aria-hidden>
+            🦜
+          </span>
+          <div>
+            <h1 className="font-pixel text-base leading-relaxed text-sun drop-shadow-[2px_2px_0_#0a2540] sm:text-xl">
+              FREE THE CAPTIVES
+            </h1>
+            <p className="font-pixel mt-2 text-[10px] text-emerald-50">
+              {issues.length} bird{issues.length === 1 ? "" : "s"} on the board · ranger{" "}
+              {shortName(currentEmail)}
+            </p>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <button
             onClick={() => setCreating(true)}
-            className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-500"
+            className="pixel-btn bg-macaw px-4 py-3 text-xs text-white hover:bg-macaw-dark"
           >
-            + New issue
+            + NEW RESCUE
           </button>
         </div>
       </header>
@@ -159,7 +169,7 @@ export default function Board({ loaderData }: Route.ComponentProps) {
           return (
             <section
               key={col.id}
-              className="flex w-80 flex-shrink-0 flex-col rounded-lg bg-gray-100 dark:bg-gray-900"
+              className="pixel-box flex w-80 flex-shrink-0 flex-col bg-white/80 dark:bg-emerald-950/80"
               onDragOver={(e) => {
                 e.preventDefault();
                 // Hovering the column padding (below the cards) → append to end.
@@ -175,11 +185,11 @@ export default function Board({ loaderData }: Route.ComponentProps) {
                 );
               }}
             >
-              <div className="flex items-center justify-between px-3 py-2.5">
-                <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+              <div className="flex items-center justify-between border-b-4 border-jungle-deep bg-leaf/40 px-3 py-3 dark:border-emerald-950 dark:bg-jungle-deep/60">
+                <h2 className="font-pixel text-[11px] text-jungle-deep dark:text-leaf">
                   {col.label}
                 </h2>
-                <span className="rounded-full bg-gray-200 px-2 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-400">
+                <span className="font-pixel rounded-none border-2 border-jungle-deep bg-sun px-2 py-0.5 text-[10px] text-jungle-deep dark:border-leaf">
                   {cards.length}
                 </span>
               </div>
@@ -213,8 +223,8 @@ export default function Board({ loaderData }: Route.ComponentProps) {
                 {dropTarget?.status === col.id &&
                   dropTarget.index === cards.length && <DropLine />}
                 {cards.length === 0 && (
-                  <p className="px-2 py-6 text-center text-xs text-gray-400">
-                    Drop issues here
+                  <p className="font-pixel px-2 py-6 text-center text-[9px] leading-relaxed text-jungle dark:text-leaf/70">
+                    🪹 no birds here<br />drop one to free it
                   </p>
                 )}
               </div>
@@ -235,7 +245,21 @@ export default function Board({ loaderData }: Route.ComponentProps) {
 }
 
 function DropLine() {
-  return <div className="my-1 h-0.5 rounded bg-blue-500" />;
+  return <div className="my-1 h-1 bg-macaw" />;
+}
+
+/** Scrolling 8-bit banner — the rallying cry, repeated so the loop is seamless. */
+function CaptiveMarquee() {
+  const cry =
+    "🦜 FREE THE CAPTIVES ★ SQUAWK ★ FREE THE CAPTIVES ★ 🪶 ★ FREE THE CAPTIVES ★ ";
+  return (
+    <div className="overflow-hidden border-b-4 border-jungle-deep bg-sun py-1.5 dark:border-emerald-950">
+      <div className="animate-marquee font-pixel whitespace-nowrap text-[10px] text-jungle-deep">
+        <span>{cry.repeat(4)}</span>
+        <span aria-hidden>{cry.repeat(4)}</span>
+      </div>
+    </div>
+  );
 }
 
 function IssueCard({
@@ -259,34 +283,36 @@ function IssueCard({
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       onDragOver={onDragOver}
-      className={`block cursor-grab rounded-md border border-gray-200 bg-white p-3 shadow-sm transition hover:border-gray-300 active:cursor-grabbing dark:border-gray-800 dark:bg-gray-800 ${
-        dragging ? "opacity-40" : ""
+      className={`pixel-box block cursor-grab bg-white p-3 transition active:cursor-grabbing dark:bg-emerald-900 ${
+        dragging ? "opacity-40" : "hover:-translate-y-0.5"
       }`}
     >
-      <p className="text-sm font-medium text-gray-900 dark:text-gray-50">
+      <p className="text-lg leading-tight font-medium text-gray-900 dark:text-emerald-50">
         {issue.title}
       </p>
       <div className="mt-2.5 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="font-mono text-xs text-gray-400">
+          <span className="font-pixel text-[9px] text-jungle dark:text-leaf">
             {issueKey(issue.id)}
           </span>
-          <span className={`rounded px-1.5 py-0.5 text-xs font-medium ${p.badge}`}>
+          <span className={`px-1.5 py-0.5 text-xs font-bold ${p.badge}`}>
             {p.label}
           </span>
         </div>
         {issue.assigneeEmail ? (
           <span
             title={issue.assigneeEmail}
-            className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-200 text-[10px] font-semibold text-gray-700 dark:bg-gray-700 dark:text-gray-200"
+            className="flex h-7 w-7 items-center justify-center border-2 border-jungle-deep bg-sun text-[10px] font-bold text-jungle-deep dark:border-leaf"
           >
             {initials(issue.assigneeEmail)}
           </span>
         ) : (
           <span
-            title="Unassigned"
-            className="h-6 w-6 rounded-full border border-dashed border-gray-300 dark:border-gray-600"
-          />
+            title="No ranger assigned"
+            className="flex h-7 w-7 items-center justify-center border-2 border-dashed border-jungle/60 text-xs dark:border-leaf/50"
+          >
+            🪺
+          </span>
         )}
       </div>
     </Link>
@@ -313,46 +339,48 @@ function NewIssueModal({
 
   return (
     <div
-      className="fixed inset-0 z-10 flex items-start justify-center bg-black/40 p-4 pt-20"
+      className="fixed inset-0 z-10 flex items-start justify-center bg-jungle-deep/70 p-4 pt-20"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-lg rounded-lg bg-white p-5 shadow-xl dark:bg-gray-900"
+        className="pixel-box w-full max-w-lg bg-white p-5 dark:bg-emerald-950"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-50">
-          New issue
+        <h2 className="font-pixel mb-4 flex items-center gap-2 text-sm text-macaw">
+          <span className="text-2xl">🦜</span> NEW RESCUE
         </h2>
         <fetcher.Form ref={formRef} method="post" className="flex flex-col gap-3">
           <input type="hidden" name="intent" value="create" />
           <label className="flex flex-col gap-1 text-sm">
-            <span className="font-medium text-gray-700 dark:text-gray-300">Title</span>
+            <span className="font-pixel text-[10px] text-jungle-deep dark:text-leaf">
+              Bird's name
+            </span>
             <input
               name="title"
               required
               autoFocus
-              className="rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
+              className="border-2 border-jungle-deep bg-white px-3 py-2 text-lg dark:border-leaf dark:bg-emerald-900"
             />
           </label>
           <label className="flex flex-col gap-1 text-sm">
-            <span className="font-medium text-gray-700 dark:text-gray-300">
-              Description
+            <span className="font-pixel text-[10px] text-jungle-deep dark:text-leaf">
+              Rescue notes
             </span>
             <textarea
               name="description"
               rows={3}
-              className="rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
+              className="border-2 border-jungle-deep bg-white px-3 py-2 text-lg dark:border-leaf dark:bg-emerald-900"
             />
           </label>
           <div className="grid grid-cols-2 gap-3">
             <label className="flex flex-col gap-1 text-sm">
-              <span className="font-medium text-gray-700 dark:text-gray-300">
-                Status
+              <span className="font-pixel text-[10px] text-jungle-deep dark:text-leaf">
+                Cage status
               </span>
               <select
                 name="status"
                 defaultValue="todo"
-                className="rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
+                className="border-2 border-jungle-deep bg-white px-3 py-2 text-lg dark:border-leaf dark:bg-emerald-900"
               >
                 {STATUSES.map((s) => (
                   <option key={s.id} value={s.id}>
@@ -362,13 +390,13 @@ function NewIssueModal({
               </select>
             </label>
             <label className="flex flex-col gap-1 text-sm">
-              <span className="font-medium text-gray-700 dark:text-gray-300">
-                Priority
+              <span className="font-pixel text-[10px] text-jungle-deep dark:text-leaf">
+                Urgency
               </span>
               <select
                 name="priority"
                 defaultValue="medium"
-                className="rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
+                className="border-2 border-jungle-deep bg-white px-3 py-2 text-lg dark:border-leaf dark:bg-emerald-900"
               >
                 {PRIORITIES.map((p) => (
                   <option key={p.id} value={p.id}>
@@ -379,15 +407,15 @@ function NewIssueModal({
             </label>
           </div>
           <label className="flex flex-col gap-1 text-sm">
-            <span className="font-medium text-gray-700 dark:text-gray-300">
-              Assignee
+            <span className="font-pixel text-[10px] text-jungle-deep dark:text-leaf">
+              Assigned ranger
             </span>
             <input
               name="assigneeEmail"
               list="known-users"
-              placeholder="email — leave blank for unassigned"
+              placeholder="ranger email — blank = no ranger yet"
               defaultValue=""
-              className="rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
+              className="border-2 border-jungle-deep bg-white px-3 py-2 text-lg dark:border-leaf dark:bg-emerald-900"
             />
             <datalist id="known-users">
               {users.map((u) => (
@@ -401,30 +429,30 @@ function NewIssueModal({
                   formRef.current?.elements.namedItem("assigneeEmail");
                 if (input instanceof HTMLInputElement) input.value = currentEmail;
               }}
-              className="self-start text-xs text-blue-600 hover:underline"
+              className="font-pixel self-start text-[9px] text-sky-deep hover:underline dark:text-sky"
             >
-              Assign to me
+              ▶ assign to me
             </button>
           </label>
 
           {fetcher.data?.error && (
-            <p className="text-sm text-red-600">{fetcher.data.error}</p>
+            <p className="font-pixel text-[10px] text-macaw">{fetcher.data.error}</p>
           )}
 
-          <div className="mt-2 flex justify-end gap-2">
+          <div className="mt-2 flex justify-end gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+              className="font-pixel px-3 py-2 text-[10px] text-jungle-deep hover:underline dark:text-leaf"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-500 disabled:opacity-50"
+              className="pixel-btn bg-jungle px-4 py-3 text-[10px] text-white hover:bg-jungle-deep disabled:opacity-50"
             >
-              {submitting ? "Creating…" : "Create issue"}
+              {submitting ? "Freeing…" : "🕊️ Free this bird"}
             </button>
           </div>
         </fetcher.Form>

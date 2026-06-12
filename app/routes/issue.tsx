@@ -70,16 +70,16 @@ export default function IssueDetail({
   const p = priorityMeta(issue.priority);
 
   return (
-    <main className="mx-auto min-h-screen max-w-2xl bg-white px-6 py-8 dark:bg-gray-950">
-      <div className="mb-6 flex items-center gap-3">
-        <Link to="/" className="text-sm text-blue-600 hover:underline">
+    <main className="mx-auto min-h-screen max-w-2xl px-6 py-8">
+      <div className="pixel-box mb-6 flex flex-wrap items-center gap-3 bg-jungle px-4 py-3 dark:bg-jungle-deep">
+        <Link to="/" className="font-pixel text-[10px] text-sun hover:underline">
           ← Board
         </Link>
-        <span className="font-mono text-sm text-gray-400">{issueKey(issue.id)}</span>
-        <span className={`rounded px-1.5 py-0.5 text-xs font-medium ${p.badge}`}>
+        <span className="font-pixel text-[10px] text-emerald-50">{issueKey(issue.id)}</span>
+        <span className={`px-1.5 py-0.5 text-xs font-bold ${p.badge}`}>
           {p.label}
         </span>
-        <span className="rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-600 dark:bg-gray-800 dark:text-gray-300">
+        <span className="font-pixel border-2 border-jungle-deep bg-sun px-1.5 py-0.5 text-[10px] text-jungle-deep dark:border-leaf">
           {statusLabel(issue.status)}
         </span>
         <span className="ml-auto">
@@ -87,37 +87,42 @@ export default function IssueDetail({
         </span>
       </div>
 
+      <div className="pixel-box bg-white px-6 py-6 dark:bg-emerald-950">
+      <p className="font-pixel mb-5 flex items-center gap-2 text-xs text-macaw">
+        <span className="animate-bob text-2xl">🦜</span> FREE THIS CAPTIVE
+      </p>
+
       <Form method="post" className="flex flex-col gap-4">
         <input type="hidden" name="intent" value="update" />
         <label className="flex flex-col gap-1 text-sm">
-          <span className="font-medium text-gray-700 dark:text-gray-300">Title</span>
+          <span className="font-pixel text-[10px] text-jungle-deep dark:text-leaf">Title</span>
           <input
             name="title"
             defaultValue={issue.title}
             required
-            className="rounded-md border border-gray-300 px-3 py-2 text-base font-medium dark:border-gray-700 dark:bg-gray-900"
+            className="border-2 border-jungle-deep bg-white px-3 py-2 text-xl font-medium dark:border-leaf dark:bg-emerald-900"
           />
         </label>
 
         <label className="flex flex-col gap-1 text-sm">
-          <span className="font-medium text-gray-700 dark:text-gray-300">
+          <span className="font-pixel text-[10px] text-jungle-deep dark:text-leaf">
             Description
           </span>
           <textarea
             name="description"
             defaultValue={issue.description}
             rows={6}
-            className="rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900"
+            className="border-2 border-jungle-deep bg-white px-3 py-2 text-lg dark:border-leaf dark:bg-emerald-900"
           />
         </label>
 
         <div className="grid grid-cols-2 gap-4">
           <label className="flex flex-col gap-1 text-sm">
-            <span className="font-medium text-gray-700 dark:text-gray-300">Status</span>
+            <span className="font-pixel text-[10px] text-jungle-deep dark:text-leaf">Status</span>
             <select
               name="status"
               defaultValue={issue.status}
-              className="rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900"
+              className="border-2 border-jungle-deep bg-white px-3 py-2 text-lg dark:border-leaf dark:bg-emerald-900"
             >
               {STATUSES.map((s) => (
                 <option key={s.id} value={s.id}>
@@ -127,13 +132,13 @@ export default function IssueDetail({
             </select>
           </label>
           <label className="flex flex-col gap-1 text-sm">
-            <span className="font-medium text-gray-700 dark:text-gray-300">
+            <span className="font-pixel text-[10px] text-jungle-deep dark:text-leaf">
               Priority
             </span>
             <select
               name="priority"
               defaultValue={issue.priority}
-              className="rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900"
+              className="border-2 border-jungle-deep bg-white px-3 py-2 text-lg dark:border-leaf dark:bg-emerald-900"
             >
               {PRIORITIES.map((pr) => (
                 <option key={pr.id} value={pr.id}>
@@ -145,10 +150,10 @@ export default function IssueDetail({
         </div>
 
         <label className="flex flex-col gap-1 text-sm">
-          <span className="font-medium text-gray-700 dark:text-gray-300">Assignee</span>
+          <span className="font-pixel text-[10px] text-jungle-deep dark:text-leaf">Assignee</span>
           <div className="flex items-center gap-2">
             {issue.assigneeEmail && (
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gray-200 text-[11px] font-semibold text-gray-700 dark:bg-gray-700 dark:text-gray-200">
+              <span className="flex h-8 w-8 items-center justify-center border-2 border-jungle-deep bg-sun text-[11px] font-bold text-jungle-deep dark:border-leaf">
                 {initials(issue.assigneeEmail)}
               </span>
             )}
@@ -156,8 +161,8 @@ export default function IssueDetail({
               name="assigneeEmail"
               list="known-users"
               defaultValue={issue.assigneeEmail ?? ""}
-              placeholder="email — leave blank for unassigned"
-              className="flex-1 rounded-md border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900"
+              placeholder="ranger email — blank = no ranger yet"
+              className="flex-1 border-2 border-jungle-deep bg-white px-3 py-2 text-lg dark:border-leaf dark:bg-emerald-900"
             />
           </div>
           <datalist id="known-users">
@@ -167,13 +172,13 @@ export default function IssueDetail({
           </datalist>
         </label>
 
-        <p className="text-xs text-gray-400">
-          Created by {issue.creatorEmail} ·{" "}
+        <p className="font-pixel text-[9px] leading-relaxed text-jungle dark:text-leaf/70">
+          🪶 spotted by {issue.creatorEmail} ·{" "}
           {new Date(issue.createdAt).toLocaleDateString()}
         </p>
 
         {actionData?.error && (
-          <p className="text-sm text-red-600">{actionData.error}</p>
+          <p className="font-pixel text-[10px] text-macaw">{actionData.error}</p>
         )}
 
         <div className="mt-2 flex items-center justify-between">
@@ -183,48 +188,50 @@ export default function IssueDetail({
             value="delete"
             formNoValidate
             onClick={(e) => {
-              if (!confirm("Delete this issue?")) e.preventDefault();
+              if (!confirm("Release this bird from the board?")) e.preventDefault();
             }}
-            className="rounded-md px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-950"
+            className="font-pixel px-3 py-2 text-[10px] text-macaw hover:underline"
           >
-            Delete
+            🗑 Delete
           </button>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-3">
             <Link
               to="/"
-              className="rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+              className="font-pixel px-3 py-2 text-[10px] text-jungle-deep hover:underline dark:text-leaf"
             >
               Cancel
             </Link>
             <button
               type="submit"
               disabled={busy}
-              className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500 disabled:opacity-50"
+              className="pixel-btn bg-jungle px-4 py-3 text-[10px] text-white hover:bg-jungle-deep disabled:opacity-50"
             >
-              {busy ? "Saving…" : "Save changes"}
+              {busy ? "Saving…" : "🕊️ Save the rescue"}
             </button>
           </div>
         </div>
       </Form>
+      </div>
     </main>
   );
 }
 
 export function ErrorBoundary() {
   return (
-    <main className="mx-auto max-w-2xl px-6 py-16 text-center">
-      <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-50">
-        Issue not found
-      </h1>
-      <p className="mt-2 text-gray-500">
-        That issue doesn't exist or was deleted.
-      </p>
-      <Link
-        to="/"
-        className="mt-4 inline-block text-sm text-blue-600 hover:underline"
-      >
-        ← Back to board
-      </Link>
+    <main className="mx-auto max-w-2xl px-6 py-16">
+      <div className="pixel-box bg-white p-8 text-center dark:bg-emerald-950">
+        <div className="mb-3 text-5xl">🦜❓</div>
+        <h1 className="font-pixel text-base text-macaw">This bird flew the coop</h1>
+        <p className="mt-3 text-lg">
+          That captive doesn't exist or was already freed.
+        </p>
+        <Link
+          to="/"
+          className="font-pixel mt-5 inline-block text-[10px] text-jungle hover:underline dark:text-leaf"
+        >
+          ← Back to the board
+        </Link>
+      </div>
     </main>
   );
 }

@@ -22,16 +22,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/// A starter model: a note belonging to the signed-in user.
-/// It's tied to the authenticated identity via `userEmail` — the same
-/// `user.email` you get from `useUser()` / `getUser(request)`.
-/// Use this as the pattern to extend: copy it, rename it, add fields.
-model Note {
-  id        String   @id @default(cuid())
-  body      String
-  userEmail String // owner — matches the authenticated user's email
+/// A Jira-style issue on a shared team board.
+///
+/// The board is shared: every signed-in user sees and can edit all issues
+/// (that's why there's no per-user scoping here — `creatorEmail` /
+/// `assigneeEmail` track *who* rather than *gate access*).
+///
+/// `id` is an autoincrementing integer so we can render a human-readable key
+/// like `VIBE-42`. SQLite only allows `autoincrement()` on the primary key,
+/// so the id doubles as the issue number.
+model Issue {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String @default("")
+
+  /// Kanban column. Plain String (SQLite has no enums): "todo" | "in_progress" | "done".
+  status String @default("todo")
+
+  /// Plain String (no enums): "low" | "medium" | "high" | "urgent".
+  priority String @default("medium")
+
+  /// Email of the assigned user, or null if unassigned. Any logged-in user.
+  assigneeEmail String?
+
+  /// Email of whoever created the issue.
+  creatorEmail String
+
+  /// Sort key within a column. Floats let us insert between two cards by
+  /// averaging their positions, so a reorder only updates the moved card.
+  position Float @default(0)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([userEmail])
+  @@index([status])
 }

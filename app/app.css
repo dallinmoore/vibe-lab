@@ -17,11 +17,13 @@
   --color-jungle-deep: #0d3a6b;
   --color-macaw: #e23b2e;
   --color-macaw-dark: #9c1f17;
-  --color-sun: #ffd23f;
+  /* `sun` is the bright accent — now a near-white icy blue instead of yellow,
+     so the scheme reads blue + white/light-blue. `bark` follows it to navy. */
+  --color-sun: #dceeff;
   --color-sky: #2bb3e0;
   --color-sky-deep: #155e8a;
   --color-leaf: #5cb8e8;
-  --color-bark: #5c3a1e;
+  --color-bark: #15375c;
 
   /* Override Tailwind's built-in emerald scale (used for dark-mode surfaces and
      light text) with blue equivalents so `dark:bg-emerald-950` etc. go blue. */
